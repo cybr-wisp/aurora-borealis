@@ -7,3 +7,6 @@ cmake-build-*/
 *.log
 .DS_Store
 simulation/sim/network/observation_pb2.py
+
+vcpkg_installed/
+engine/vcpkg_installed/
