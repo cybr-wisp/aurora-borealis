@@ -25,13 +25,13 @@
     ],
     "dt_sec": 0.1,
     "python": "3.13.5",
-    "elapsed_sec": 5.348,
+    "elapsed_sec": 4.911,
     "nees_95_bounds_6d": [
       1.237344245791203,
       14.44937533544792
     ]
   },
-  "day1_sensor_validation": {
+  "sensor_validation": {
     "samples_delivered": 9001,
     "packet_loss_observed_pct": 9.99,
     "range_noise_mean_m": -0.11195850527740489,

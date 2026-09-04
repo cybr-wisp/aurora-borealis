@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 import math
@@ -284,7 +284,7 @@ def main():
 
     result = {
         "metadata": {"seed": SEED, "monte_carlo_seeds": mc_seeds, "dt_sec": DT, "python": platform.python_version(), "elapsed_sec": round(time.perf_counter() - t0, 3), "nees_95_bounds_6d": list(NEES_BOUNDS)},
-        "day1_sensor_validation": day1_sensor_metrics(),
+        "sensor_validation": day1_sensor_metrics(),
         "constant_velocity": {
             "one_radar_ekf": {k: v for k, v in one_ekf.items() if k != "position_errors_m"},
             "three_radar_ekf": {k: v for k, v in three_ekf.items() if k != "position_errors_m"},
@@ -313,4 +313,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
