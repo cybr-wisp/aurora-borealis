@@ -20,7 +20,6 @@ class RadarConfig:
     range_bias_m: float = 0.0
     azimuth_bias_rad: float = 0.0
     elevation_bias_rad: float = 0.0
-    reorder_probability: float = 0.0
 
 
 @dataclass(frozen=True)
@@ -115,3 +114,4 @@ class RadarSensor:
                 is_clutter=True,
             ))
         return observations
+

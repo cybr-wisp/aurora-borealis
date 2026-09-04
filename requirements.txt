@@ -1,5 +1,4 @@
 numpy>=1.26
-scipy>=1.11
 PyYAML>=6.0
 protobuf>=5.27
 pytest>=8.0

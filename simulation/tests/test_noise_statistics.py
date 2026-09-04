@@ -1,6 +1,4 @@
 import numpy as np
-from scipy.stats import chisquare
-
 from simulation.sim.target import TargetState
 from simulation.sim.sensors.radar import RadarConfig, RadarSensor, cartesian_to_spherical
 
@@ -34,5 +32,7 @@ def test_noise_statistics_and_packet_loss_converge():
     z2 = (errors[:, 0] / cfg.range_sigma_m) ** 2
     bins = np.array([0.0, 0.101531, 0.454936, 1.323304, np.inf])
     counts, _ = np.histogram(z2, bins=bins)
-    _, p = chisquare(counts)
-    assert p > 0.01
+    expected = np.full(4, z2.size / 4.0)
+    chi_square = float(np.sum((counts - expected) ** 2 / expected))
+    # Chi-square goodness-of-fit critical value for df=3 at alpha=0.01.
+    assert chi_square < 11.344866730144373
