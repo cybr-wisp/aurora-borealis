@@ -1,10 +1,10 @@
-#include "estimation/process_model.h"
+﻿#include "estimation/process_model.h"
 #include <stdexcept>
 
 namespace aurora::estimation {
 Eigen::Matrix<double,6,6> ConstantVelocityModel::transition(double dt) const {
   if (dt < 0.0) throw std::invalid_argument("negative dt");
-  auto f = Covariance::Identity();
+  Covariance f = Covariance::Identity();
   for (int i = 0; i < 3; ++i) f(i, i + 3) = dt;
   return f;
 }
@@ -21,3 +21,4 @@ Covariance ConstantVelocityModel::process_noise(double dt, double scale) const {
   return q;
 }
 }
+

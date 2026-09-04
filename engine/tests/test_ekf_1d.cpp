@@ -10,5 +10,6 @@ TEST(Ekf, ReducesPositionUncertaintyAfterMeasurement){
   MeasurementCovariance r=MeasurementCovariance::Zero(); r.diagonal()<<100.0,1e-5,1e-5;
   const double before=f.covariance().topLeftCorner<3,3>().trace();
   f.update({z,r},model);
-  EXPECT_LT(f.covariance().topLeftCorner<3,3>().trace(),before);
+  const double after = f.covariance().topLeftCorner<3,3>().trace();
+  EXPECT_LT(after, before);
 }
