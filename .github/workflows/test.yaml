@@ -1,0 +1,22 @@
+name: test
+on:
+  push:
+  pull_request:
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install -r requirements.txt
+      - run: python -m pytest -q simulation/tests
+  cpp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y libeigen3-dev libprotobuf-dev protobuf-compiler libgtest-dev ninja-build
+      - run: cmake -S engine -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build
+      - run: ctest --test-dir build --output-on-failure
+      - run: ./build/bench_ingestion

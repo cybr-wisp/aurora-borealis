@@ -1,0 +1,15 @@
+syntax = "proto3";
+package aurora.proto;
+
+message Observation {
+  uint32 sensor_id = 1;
+  uint64 sequence_number = 2;
+  double timestamp_sec = 3;
+  double range_m = 4;
+  double azimuth_rad = 5;
+  double elevation_rad = 6;
+  double range_sigma = 7;
+  double azimuth_sigma = 8;
+  double elevation_sigma = 9;
+  uint64 sent_monotonic_ns = 10;
+}

@@ -1,0 +1,9 @@
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.venv/
+build/
+cmake-build-*/
+*.log
+.DS_Store
+simulation/sim/network/observation_pb2.py

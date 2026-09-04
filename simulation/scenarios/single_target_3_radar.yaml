@@ -1,0 +1,11 @@
+seed: 20260903
+duration_sec: 60.0
+dt_sec: 0.1
+target:
+  id: 1
+  position0_m: [1200.0, 350.0, 300.0]
+  velocity_mps: [75.0, 12.0, 0.5]
+radars:
+  - {sensor_id: 1, position_enu_m: [0.0, 0.0, 0.0], range_sigma_m: 12.0, azimuth_sigma_rad: 0.003, elevation_sigma_rad: 0.003}
+  - {sensor_id: 2, position_enu_m: [2500.0, -800.0, 50.0], range_sigma_m: 12.0, azimuth_sigma_rad: 0.003, elevation_sigma_rad: 0.003}
+  - {sensor_id: 3, position_enu_m: [-1800.0, 1400.0, 80.0], range_sigma_m: 12.0, azimuth_sigma_rad: 0.003, elevation_sigma_rad: 0.003}
