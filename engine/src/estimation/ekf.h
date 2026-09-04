@@ -1,10 +1,9 @@
 #pragma once
 #include "estimation/process_model.h"
 #include "estimation/measurement_model.h"
+#include "estimation/update_stats.h"
 
 namespace aurora::estimation {
-struct UpdateStats { MeasurementVector innovation; MeasurementCovariance innovation_covariance; double nis; };
-
 class Ekf {
  public:
   Ekf(StateVector initial_state, Covariance initial_covariance, ConstantVelocityModel process_model);

@@ -21,14 +21,14 @@ Real-time multi-sensor tracking research system built around deterministic simul
 - Coordinated turn: **4.45 m mean RMSE**, **4.76 m p95**, 100% of runs below 5 m, **94.56%** mean NEES-in-95%-bounds.
 - Abrupt acceleration maneuver + adaptive Q: **4.14 m mean RMSE**, **4.44 m p95**, 100% of runs below 5 m, but only **77.84%** mean NEES-in-bounds. Accuracy clears the current target; uncertainty calibration does not yet.
 
-The committed results are generated, not hand-entered: `experiments/results/day1_4_metrics.json` records seeds and conditions.
+The committed results are generated, not hand-entered: `experiments/results/tracking_benchmark.json` records seeds and conditions.
 
 ## Build and test
 
 ```bash
 python3 -m pip install -r requirements.txt
 python3 -m pytest -q simulation/tests
-python3 experiments/day1_4_metrics.py
+python3 experiments/tracking_benchmark.py
 sudo apt-get update
 sudo apt-get install -y cmake ninja-build g++ libeigen3-dev libprotobuf-dev protobuf-compiler libgtest-dev
 cmake -S engine -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
@@ -45,4 +45,5 @@ protoc -I engine/proto --python_out=simulation/sim/network engine/proto/observat
 
 ## Design notes
 
-See [`docs/day1_4_design.md`](docs/day1_4_design.md) for the decisions and tradeoffs behind deterministic RNG ownership, SPSC backpressure, Protobuf, ENU tracking, Joseph-form covariance updates, EKF/UKF parity, and NEES/NIS validation.
+See [`docs/tracking_design.md`](docs/tracking_design.md) for the decisions and tradeoffs behind deterministic RNG ownership, SPSC backpressure, Protobuf, ENU tracking, Joseph-form covariance updates, EKF/UKF parity, and NEES/NIS validation.
+

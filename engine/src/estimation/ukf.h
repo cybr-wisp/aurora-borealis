@@ -1,6 +1,7 @@
 #pragma once
 #include "estimation/process_model.h"
 #include "estimation/measurement_model.h"
+#include "estimation/update_stats.h"
 
 namespace aurora::estimation {
 class Ukf {

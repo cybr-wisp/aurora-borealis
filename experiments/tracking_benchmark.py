@@ -12,14 +12,12 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 import numpy as np
-from scipy.stats import chi2
-
 from simulation.sim.sensors.radar import RadarConfig, RadarSensor, spherical_to_cartesian
 from simulation.sim.trajectory import constant_velocity, coordinated_turn, acceleration_maneuver
 
 SEED = 20260903
 DT = 0.1
-NEES_BOUNDS = tuple(float(v) for v in chi2.ppf([0.025, 0.975], 6))
+NEES_BOUNDS = (1.237344245791203, 14.44937533544792)
 
 
 def wrap(a: float) -> float:
@@ -307,7 +305,7 @@ def main():
             "abrupt_maneuver_adaptive_ekf": summarize_runs(degraded_maneuver_runs),
         },
     }
-    out = Path(__file__).parent / "results" / "day1_4_metrics.json"
+    out = Path(__file__).parent / "results" / "tracking_benchmark.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result, indent=2))
@@ -315,3 +313,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

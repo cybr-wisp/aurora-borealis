@@ -60,4 +60,5 @@ The detector monitors normalized innovation squared (NIS). A persistent high-NIS
 
 ## 10. Metrics are reproducible artifacts
 
-`experiments/day1_4_metrics.py` writes the exact JSON committed in `experiments/results/day1_4_metrics.json`. The degraded-sensing claim uses 20 deterministic seeds rather than a single selected trial.
+`experiments/tracking_benchmark.py` writes the exact JSON committed in `experiments/results/tracking_benchmark.json`. The degraded-sensing claim uses 20 deterministic seeds rather than a single selected trial.
+

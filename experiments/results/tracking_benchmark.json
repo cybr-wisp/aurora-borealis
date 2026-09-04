@@ -25,9 +25,9 @@
     ],
     "dt_sec": 0.1,
     "python": "3.13.5",
-    "elapsed_sec": 5.338,
+    "elapsed_sec": 5.348,
     "nees_95_bounds_6d": [
-      1.2373442457912027,
+      1.237344245791203,
       14.44937533544792
     ]
   },
@@ -41,56 +41,56 @@
   },
   "constant_velocity": {
     "one_radar_ekf": {
-      "rmse_m": 2.463596513782152,
+      "rmse_m": 2.4635965137821514,
       "raw_rmse_m": 17.13249694546281,
       "rmse_improvement_pct": 85.62033005682464,
       "nees_in_95_pct": 85.55758683729434,
       "nees_mean": 2.9050215036940163,
-      "nis_mean": 3.0045556726156524
+      "nis_mean": 3.0045556726156537
     },
     "three_radar_ekf": {
-      "rmse_m": 1.3736712581746495,
-      "raw_rmse_m": 17.103824031851246,
-      "rmse_improvement_pct": 91.96863078328825,
+      "rmse_m": 1.3736712581746306,
+      "raw_rmse_m": 17.10382403185125,
+      "rmse_improvement_pct": 91.96863078328835,
       "nees_in_95_pct": 76.22504537205081,
-      "nees_mean": 2.586159052456702,
-      "nis_mean": 3.0455173842810326
+      "nees_mean": 2.5861590524565052,
+      "nis_mean": 3.0455173842810392
     }
   },
   "coordinated_turn": {
     "ekf": {
-      "rmse_m": 3.433931902366856,
-      "raw_rmse_m": 15.405811069558935,
-      "rmse_improvement_pct": 77.71015179361686,
+      "rmse_m": 3.4339319023668606,
+      "raw_rmse_m": 15.405811069558938,
+      "rmse_improvement_pct": 77.71015179361684,
       "nees_in_95_pct": 92.37749546279493,
-      "nees_mean": 3.690359947687053,
-      "nis_mean": 3.038935698072308
+      "nees_mean": 3.6903599476870896,
+      "nis_mean": 3.0389356980723066
     },
     "ukf": {
-      "rmse_m": 3.4336095101862028,
-      "raw_rmse_m": 15.405811069558935,
-      "rmse_improvement_pct": 77.71224445968421,
+      "rmse_m": 3.4336095101867725,
+      "raw_rmse_m": 15.405811069558938,
+      "rmse_improvement_pct": 77.71224445968052,
       "nees_in_95_pct": 92.37749546279493,
-      "nees_mean": 3.6904049925283555,
-      "nis_mean": 3.0389272318547733
+      "nees_mean": 3.6904049925294538,
+      "nis_mean": 3.038927231854763
     }
   },
   "abrupt_maneuver": {
     "static_q": {
-      "rmse_m": 3.3544868861232997,
-      "raw_rmse_m": 16.394408206757856,
-      "rmse_improvement_pct": 79.5388351697833,
+      "rmse_m": 3.3544868861232486,
+      "raw_rmse_m": 16.39440820675786,
+      "rmse_improvement_pct": 79.53883516978361,
       "nees_in_95_pct": 68.60254083484574,
-      "nees_mean": 9.310778219622325,
-      "nis_mean": 3.1564656649461447
+      "nees_mean": 9.310778219622126,
+      "nis_mean": 3.15646566494614
     },
     "adaptive_q": {
-      "rmse_m": 3.2065836820461446,
-      "raw_rmse_m": 16.394408206757856,
-      "rmse_improvement_pct": 80.44099157708922,
+      "rmse_m": 3.206583682046183,
+      "raw_rmse_m": 16.39440820675786,
+      "rmse_improvement_pct": 80.440991577089,
       "nees_in_95_pct": 69.50998185117967,
-      "nees_mean": 8.49184647239365,
-      "nis_mean": 3.140634260974576
+      "nees_mean": 8.491846472393688,
+      "nis_mean": 3.140634260974572
     },
     "static_recovery_sec": 0.8,
     "adaptive_recovery_sec": 0.1
@@ -99,17 +99,17 @@
     "condition": "3 radars, 70% detection probability (30% dropout), 10% packet loss per radar",
     "coordinated_turn_ekf": {
       "runs": 20,
-      "rmse_mean_m": 4.44836339824362,
-      "rmse_p95_m": 4.760341007686569,
-      "rmse_max_m": 4.853058039904418,
+      "rmse_mean_m": 4.448363398243613,
+      "rmse_p95_m": 4.760341007686565,
+      "rmse_max_m": 4.853058039904402,
       "runs_below_5m_pct": 100.0,
       "mean_nees_in_95_pct": 94.56218690799308
     },
     "abrupt_maneuver_adaptive_ekf": {
       "runs": 20,
-      "rmse_mean_m": 4.136841349864226,
-      "rmse_p95_m": 4.435116056135027,
-      "rmse_max_m": 4.710186026294347,
+      "rmse_mean_m": 4.136841349864225,
+      "rmse_p95_m": 4.435116056135059,
+      "rmse_max_m": 4.710186026294343,
       "runs_below_5m_pct": 100.0,
       "mean_nees_in_95_pct": 77.8356780849757
     }
