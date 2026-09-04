@@ -1,4 +1,4 @@
-﻿cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.24)
 
 project(aurora_borealis_engine LANGUAGES CXX)
 
@@ -50,6 +50,7 @@ add_library(
     src/estimation/maneuver_detector.cpp
 
     src/ingestion/validator.cpp
+    src/ingestion/sensor_liveness.cpp
     src/ingestion/udp_receiver.cpp
 )
 
@@ -110,6 +111,7 @@ if(BUILD_TESTING)
         tests/test_maneuver_detector.cpp
         tests/test_protobuf_roundtrip.cpp
         tests/test_validator.cpp
+        tests/test_sensor_liveness.cpp
     )
 
     target_link_libraries(
@@ -141,6 +143,17 @@ add_executable(
 
 target_link_libraries(
     bench_ingestion
+    PRIVATE
+        aurora_core
+)
+
+add_executable(
+    bench_udp_e2e
+    benchmarks/bench_udp_e2e.cpp
+)
+
+target_link_libraries(
+    bench_udp_e2e
     PRIVATE
         aurora_core
 )

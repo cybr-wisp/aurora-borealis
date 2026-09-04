@@ -1,0 +1,11 @@
+﻿=== In-process Protobuf + SPSC microbenchmark ===
+payload_bytes=69 messages=300000 throughput_msg_s=9.87677e+06 p50_us=0.1 p95_us=0.1 p99_us=0.1
+
+=== End-to-end UDP loopback benchmark ===
+case,payload_bytes,target_rate_msg_s,sent,received,accepted,rejected,malformed,queue_full,transport_drop,observed_receive_msg_s,p50_us,p95_us,p99_us
+nominal_1k,77,1000,2000,2000,2000,0,0,0,0,992.207,13.300,91.700,153.800
+nominal_5k,77,5000,10000,10000,10000,0,0,0,0,4996.078,16.600,84.900,257.600
+padded_5k_64,144,5000,10000,10000,10000,0,0,0,0,4991.728,13.800,80.800,121.200
+padded_5k_256,337,5000,10000,10000,10000,0,0,0,0,4975.018,12.000,95.100,154.000
+unpaced,78,0,100000,100000,100000,0,0,0,0,162496.043,10.700,21.200,38.500
+saturation,78,0,50000,50000,5590,0,0,44410,0,166749.652,544220.900,821383.200,821407.800
