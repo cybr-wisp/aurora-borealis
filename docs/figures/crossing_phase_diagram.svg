@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="725" height="448" viewBox="0 0 725 448">
+<rect width="100%" height="100%" fill="white"/>
+<text x="20" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="700">Aurora Borealis — crossing-target association failure boundary</text>
+<text x="20" y="55" font-family="Arial, sans-serif" font-size="12">Cell value = percentage of deterministic trials with at least one identity switch</text>
+<text x="177.5" y="68" text-anchor="middle" font-family="Arial, sans-serif" font-size="12">50 m</text>
+<text x="292.5" y="68" text-anchor="middle" font-family="Arial, sans-serif" font-size="12">30 m</text>
+<text x="407.5" y="68" text-anchor="middle" font-family="Arial, sans-serif" font-size="12">20 m</text>
+<text x="522.5" y="68" text-anchor="middle" font-family="Arial, sans-serif" font-size="12">10 m</text>
+<text x="637.5" y="68" text-anchor="middle" font-family="Arial, sans-serif" font-size="12">5 m</text>
+<text x="108" y="120.0" text-anchor="end" font-family="Arial, sans-serif" font-size="12">σ=2 m</text>
+<rect x="120" y="80" width="115" height="72" fill="hsl(0 0% 96.0%)" stroke="#777"/>
+<text x="177.5" y="121.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">0%</text>
+<rect x="235" y="80" width="115" height="72" fill="hsl(0 0% 96.0%)" stroke="#777"/>
+<text x="292.5" y="121.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">0%</text>
+<rect x="350" y="80" width="115" height="72" fill="hsl(0 0% 96.0%)" stroke="#777"/>
+<text x="407.5" y="121.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">0%</text>
+<rect x="465" y="80" width="115" height="72" fill="hsl(0 0% 96.0%)" stroke="#777"/>
+<text x="522.5" y="121.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">0%</text>
+<rect x="580" y="80" width="115" height="72" fill="hsl(0 0% 92.5%)" stroke="#777"/>
+<text x="637.5" y="121.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">6%</text>
+<text x="108" y="192.0" text-anchor="end" font-family="Arial, sans-serif" font-size="12">σ=5 m</text>
+<rect x="120" y="152" width="115" height="72" fill="hsl(0 0% 96.0%)" stroke="#777"/>
+<text x="177.5" y="193.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">0%</text>
+<rect x="235" y="152" width="115" height="72" fill="hsl(0 0% 96.0%)" stroke="#777"/>
+<text x="292.5" y="193.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">0%</text>
+<rect x="350" y="152" width="115" height="72" fill="hsl(0 0% 94.8%)" stroke="#777"/>
+<text x="407.5" y="193.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">2%</text>
+<rect x="465" y="152" width="115" height="72" fill="hsl(0 0% 85.6%)" stroke="#777"/>
+<text x="522.5" y="193.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">18%</text>
+<rect x="580" y="152" width="115" height="72" fill="hsl(0 0% 55.4%)" stroke="#777"/>
+<text x="637.5" y="193.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">70%</text>
+<text x="108" y="264.0" text-anchor="end" font-family="Arial, sans-serif" font-size="12">σ=10 m</text>
+<rect x="120" y="224" width="115" height="72" fill="hsl(0 0% 96.0%)" stroke="#777"/>
+<text x="177.5" y="265.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">0%</text>
+<rect x="235" y="224" width="115" height="72" fill="hsl(0 0% 86.1%)" stroke="#777"/>
+<text x="292.5" y="265.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">17%</text>
+<rect x="350" y="224" width="115" height="72" fill="hsl(0 0% 70.5%)" stroke="#777"/>
+<text x="407.5" y="265.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">44%</text>
+<rect x="465" y="224" width="115" height="72" fill="hsl(0 0% 45.0%)" stroke="#777"/>
+<text x="522.5" y="265.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">88%</text>
+<rect x="580" y="224" width="115" height="72" fill="hsl(0 0% 41.5%)" stroke="#777"/>
+<text x="637.5" y="265.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">94%</text>
+<text x="108" y="336.0" text-anchor="end" font-family="Arial, sans-serif" font-size="12">σ=15 m</text>
+<rect x="120" y="296" width="115" height="72" fill="hsl(0 0% 87.3%)" stroke="#777"/>
+<text x="177.5" y="337.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">15%</text>
+<rect x="235" y="296" width="115" height="72" fill="hsl(0 0% 60.6%)" stroke="#777"/>
+<text x="292.5" y="337.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">61%</text>
+<rect x="350" y="296" width="115" height="72" fill="hsl(0 0% 46.1%)" stroke="#777"/>
+<text x="407.5" y="337.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">86%</text>
+<rect x="465" y="296" width="115" height="72" fill="hsl(0 0% 39.2%)" stroke="#777"/>
+<text x="522.5" y="337.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">98%</text>
+<rect x="580" y="296" width="115" height="72" fill="hsl(0 0% 38.0%)" stroke="#777"/>
+<text x="637.5" y="337.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700">100%</text>
+<text x="407.5" y="428" text-anchor="middle" font-family="Arial, sans-serif" font-size="12">minimum crossing separation</text>
+</svg>
