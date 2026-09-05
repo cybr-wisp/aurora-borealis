@@ -1,4 +1,4 @@
-#include "ingestion/observation_queue.h"
+﻿#include "ingestion/observation_queue.h"
 #include "ingestion/sensor_liveness.h"
 #include "ingestion/udp_receiver.h"
 #include "ingestion/validator.h"
@@ -31,17 +31,23 @@ int main(int argc, char** argv) {
       queue);
 
   aurora::ingestion::Validator validator(1.0);
+  aurora::ingestion::SensorLivenessMonitor liveness(1.0);
 
-  aurora::ingestion::SensorLivenessMonitor
-      liveness(1.0);
-
-  std::unordered_set<std::uint32_t>
-      timed_out_sensors;
+  std::unordered_set<std::uint32_t> timed_out_sensors;
 
   std::uint64_t accepted = 0;
-  std::uint64_t rejected = 0;
+  std::uint64_t rejected_duplicate = 0;
+  std::uint64_t rejected_stale = 0;
+  std::uint64_t rejected_invalid = 0;
+  std::uint64_t overload_shed_oldest = 0;
   std::uint64_t timeout_events = 0;
   std::uint64_t recovery_events = 0;
+
+  // A real-time tracker should not spend seconds draining stale work after an
+  // overload burst. Only the consumer advances tail_, so shedding here keeps
+  // the ring lock-free SPSC while preserving freshness.
+  constexpr std::size_t kShedThreshold = 1024;
+  constexpr std::size_t kTargetDepthAfterShed = 256;
 
   receiver.start();
 
@@ -50,6 +56,12 @@ int main(int argc, char** argv) {
       std::chrono::seconds(duration_sec);
 
   while (std::chrono::steady_clock::now() < deadline) {
+    const auto depth = queue.size_approx();
+    if (depth > kShedThreshold) {
+      overload_shed_oldest += queue.discard_oldest(
+          depth - kTargetDepthAfterShed);
+    }
+
     const double now =
         std::chrono::duration<double>(
             std::chrono::system_clock::now()
@@ -60,25 +72,35 @@ int main(int argc, char** argv) {
       const auto result =
           validator.validate(*observation, now);
 
-      if (result ==
-          aurora::ingestion::ValidationResult::kAccept) {
-        ++accepted;
+      switch (result) {
+        case aurora::ingestion::ValidationResult::kAccept: {
+          ++accepted;
 
-        const auto sensor_id =
-            observation->sensor_id();
+          const auto sensor_id = observation->sensor_id();
 
-        if (timed_out_sensors.erase(sensor_id) > 0) {
-          ++recovery_events;
+          if (timed_out_sensors.erase(sensor_id) > 0) {
+            ++recovery_events;
+            std::cout
+                << "sensor_recovered sensor_id="
+                << sensor_id
+                << "\n";
+          }
 
-          std::cout
-              << "sensor_recovered sensor_id="
-              << sensor_id
-              << "\n";
+          liveness.observe(sensor_id, now);
+          break;
         }
 
-        liveness.observe(sensor_id, now);
-      } else {
-        ++rejected;
+        case aurora::ingestion::ValidationResult::kDuplicateOrOldSequence:
+          ++rejected_duplicate;
+          break;
+
+        case aurora::ingestion::ValidationResult::kStale:
+          ++rejected_stale;
+          break;
+
+        case aurora::ingestion::ValidationResult::kInvalid:
+          ++rejected_invalid;
+          break;
       }
     } else {
       std::this_thread::sleep_for(
@@ -105,12 +127,17 @@ int main(int argc, char** argv) {
   std::cout
       << "received=" << counters.received
       << " accepted=" << accepted
-      << " rejected=" << rejected
+      << " rejected_duplicate=" << rejected_duplicate
+      << " rejected_stale=" << rejected_stale
+      << " rejected_invalid=" << rejected_invalid
       << " malformed=" << counters.malformed
       << " queue_full=" << counters.queue_full
+      << " queue_high_water=" << queue.high_water_mark()
+      << " shed_oldest=" << overload_shed_oldest
       << " sensor_timeouts=" << timeout_events
       << " sensor_recoveries=" << recovery_events
       << "\n";
 
   return EXIT_SUCCESS;
 }
+
