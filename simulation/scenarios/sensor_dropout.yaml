@@ -1,0 +1,29 @@
+name: sensor_dropout_and_degradation
+seed: 20260905
+duration_sec: 50.0
+dt_sec: 0.1
+
+timeline:
+  - time_sec: 0.0
+    event: nominal
+
+  - time_sec: 10.0
+    event: sensor_outage_start
+    sensor_id: 2
+    duration_sec: 10.0
+
+  - time_sec: 20.0
+    event: sensor_return
+    sensor_id: 2
+
+  - time_sec: 30.0
+    event: range_bias_start
+    sensor_id: 1
+    range_bias_m: 5.0
+    duration_sec: 10.0
+
+  - time_sec: 40.0
+    event: packet_loss_increase
+    sensor_id: 3
+    packet_loss_probability: 0.40
+    duration_sec: 10.0
