@@ -1,0 +1,40 @@
+menu "Aurora Borealis sensor node"
+
+config AURORA_FAKE_SENSORS
+    bool "Use deterministic fake IMU/ToF backend"
+    default y
+    help
+        Keeps the full FreeRTOS -> ring buffer -> Protobuf -> UDP path
+        buildable before physical hardware is available.
+
+config AURORA_SENSOR_ID
+    int "Aurora sensor ID"
+    range 1000 65535
+    default 1001
+
+config AURORA_WIFI_SSID
+    string "Wi-Fi SSID"
+    default ""
+
+config AURORA_WIFI_PASSWORD
+    string "Wi-Fi password"
+    default ""
+
+config AURORA_ENGINE_IPV4
+    string "Aurora engine IPv4 address"
+    default "192.168.1.10"
+
+config AURORA_ENGINE_PORT
+    int "Aurora engine UDP port"
+    range 1 65535
+    default 46000
+
+config AURORA_I2C_SDA
+    int "I2C SDA GPIO"
+    default 8
+
+config AURORA_I2C_SCL
+    int "I2C SCL GPIO"
+    default 9
+
+endmenu
