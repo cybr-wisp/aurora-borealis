@@ -49,6 +49,12 @@ add_library(
     src/estimation/consistency.cpp
     src/estimation/maneuver_detector.cpp
 
+    src/association/gating.cpp
+    src/association/hungarian.cpp
+    src/association/track_manager.cpp
+
+    src/pipeline/tracker.cpp
+
     src/ingestion/validator.cpp
     src/ingestion/sensor_liveness.cpp
     src/ingestion/udp_receiver.cpp
@@ -112,6 +118,11 @@ if(BUILD_TESTING)
         tests/test_protobuf_roundtrip.cpp
         tests/test_validator.cpp
         tests/test_sensor_liveness.cpp
+
+        tests/test_gating.cpp
+        tests/test_hungarian.cpp
+        tests/test_track_manager.cpp
+        tests/test_tracker.cpp
     )
 
     target_link_libraries(
@@ -158,3 +169,24 @@ target_link_libraries(
         aurora_core
 )
 
+add_executable(
+    bench_backpressure
+    benchmarks/bench_backpressure.cpp
+)
+
+target_link_libraries(
+    bench_backpressure
+    PRIVATE
+        aurora_core
+)
+
+add_executable(
+    bench_association
+    benchmarks/bench_association.cpp
+)
+
+target_link_libraries(
+    bench_association
+    PRIVATE
+        aurora_core
+)
