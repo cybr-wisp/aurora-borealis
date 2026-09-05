@@ -48,6 +48,7 @@ add_library(
     src/estimation/ukf.cpp
     src/estimation/consistency.cpp
     src/estimation/maneuver_detector.cpp
+    src/estimation/adaptive_noise.cpp
 
     src/association/gating.cpp
     src/association/hungarian.cpp
@@ -115,6 +116,7 @@ if(BUILD_TESTING)
         tests/test_ukf_1d.cpp
         tests/test_nees.cpp
         tests/test_maneuver_detector.cpp
+        tests/test_adaptive_noise.cpp
         tests/test_protobuf_roundtrip.cpp
         tests/test_validator.cpp
         tests/test_sensor_liveness.cpp
@@ -123,6 +125,7 @@ if(BUILD_TESTING)
         tests/test_hungarian.cpp
         tests/test_track_manager.cpp
         tests/test_tracker.cpp
+        tests/test_multisensor_tracker.cpp
     )
 
     target_link_libraries(
