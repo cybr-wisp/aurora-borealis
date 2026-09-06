@@ -1,0 +1,97 @@
+{
+  "noise_sweep": [
+    {
+      "range_sigma_m": 5.0,
+      "rmse_m": 1.15868226208638,
+      "raw_rmse_m": 14.759414995706097,
+      "nees_in_95_pct": 74.9546279491833
+    },
+    {
+      "range_sigma_m": 10.0,
+      "rmse_m": 1.3736712581746306,
+      "raw_rmse_m": 17.10382403185125,
+      "nees_in_95_pct": 76.22504537205081
+    },
+    {
+      "range_sigma_m": 20.0,
+      "rmse_m": 1.6964682599734877,
+      "raw_rmse_m": 24.317505760728846,
+      "nees_in_95_pct": 78.0399274047187
+    },
+    {
+      "range_sigma_m": 30.0,
+      "rmse_m": 1.8791857736127517,
+      "raw_rmse_m": 33.00515901424416,
+      "nees_in_95_pct": 77.49546279491834
+    },
+    {
+      "range_sigma_m": 50.0,
+      "rmse_m": 2.0164918439283546,
+      "raw_rmse_m": 51.797073541718554,
+      "nees_in_95_pct": 76.76950998185119
+    }
+  ],
+  "sensor_count": [
+    {
+      "sensor_count": 1,
+      "rmse_m": 2.4635965137821514,
+      "rmse_improvement_pct": 85.62033005682464,
+      "nees_in_95_pct": 85.55758683729434
+    },
+    {
+      "sensor_count": 2,
+      "rmse_m": 1.5287066393218973,
+      "rmse_improvement_pct": 91.06219383177063,
+      "nees_in_95_pct": 86.93284936479128
+    },
+    {
+      "sensor_count": 3,
+      "rmse_m": 1.3736712581746306,
+      "rmse_improvement_pct": 91.96863078328835,
+      "nees_in_95_pct": 76.22504537205081
+    },
+    {
+      "sensor_count": 4,
+      "rmse_m": 1.3922155926856736,
+      "rmse_improvement_pct": 91.86020862882448,
+      "nees_in_95_pct": 76.58802177858439
+    }
+  ],
+  "packet_loss": [
+    {
+      "packet_loss_pct": 0.0,
+      "rmse_mean_m": 1.5479459294842473,
+      "rmse_p95_m": 1.7450988515170205,
+      "nees_in_95_mean_pct": 83.52087114337567,
+      "runs_below_5m_pct": 100.0
+    },
+    {
+      "packet_loss_pct": 10.0,
+      "rmse_mean_m": 1.567318209592742,
+      "rmse_p95_m": 1.8343962618731697,
+      "nees_in_95_mean_pct": 83.14223391872972,
+      "runs_below_5m_pct": 100.0
+    },
+    {
+      "packet_loss_pct": 20.0,
+      "rmse_mean_m": 1.7151177221440377,
+      "rmse_p95_m": 1.952802863995696,
+      "nees_in_95_mean_pct": 81.53423099017637,
+      "runs_below_5m_pct": 100.0
+    },
+    {
+      "packet_loss_pct": 30.0,
+      "rmse_mean_m": 1.9013579014203046,
+      "rmse_p95_m": 2.102062337969557,
+      "nees_in_95_mean_pct": 85.82487977850603,
+      "runs_below_5m_pct": 100.0
+    },
+    {
+      "packet_loss_pct": 40.0,
+      "rmse_mean_m": 1.9010091307261843,
+      "rmse_p95_m": 2.237078211775795,
+      "nees_in_95_mean_pct": 81.13881126220818,
+      "runs_below_5m_pct": 100.0
+    }
+  ]
+}

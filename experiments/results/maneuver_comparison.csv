@@ -1,0 +1,5 @@
+scenario,filter,adaptive_q,rmse_m,nees_in_95_pct,recovery_sec
+coordinated_turn,EKF,False,3.4339319023668606,92.37749546279493,
+coordinated_turn,UKF,False,3.4336095101867725,92.37749546279493,
+abrupt_maneuver,EKF,False,3.3544868861232486,68.60254083484574,0.8
+abrupt_maneuver,EKF,True,3.206583682046183,69.50998185117967,0.1
