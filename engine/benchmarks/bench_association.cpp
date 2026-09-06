@@ -26,12 +26,9 @@ void run_case(int tracks, int iterations) {
   std::normal_distribution<double> noise(0.0, 0.15);
 
   std::vector<double> latency_us;
-  latency_us.reserve(
-      static_cast<std::size_t>(iterations));
+  latency_us.reserve(static_cast<std::size_t>(iterations));
 
-  for (int iteration = 0;
-       iteration < iterations;
-       ++iteration) {
+  for (int iteration = 0; iteration < iterations; ++iteration) {
     Eigen::MatrixXd costs(tracks, tracks);
 
     for (int row = 0; row < tracks; ++row) {
@@ -39,30 +36,22 @@ void run_case(int tracks, int iterations) {
         const double separation =
             static_cast<double>(std::abs(row - col));
         costs(row, col) =
-            0.25 +
-            2.0 * separation +
-            std::abs(noise(rng));
+            0.25 + 2.0 * separation + std::abs(noise(rng));
       }
     }
 
     const auto started = Clock::now();
-
     const auto assignment =
-        aurora::association::hungarian_assign(
-            costs,
-            50.0);
-
+        aurora::association::hungarian_assign(costs, 50.0);
     const auto ended = Clock::now();
 
-    if (assignment.size() !=
-        static_cast<std::size_t>(tracks)) {
+    if (assignment.size() != static_cast<std::size_t>(tracks)) {
       std::exit(2);
     }
 
     latency_us.push_back(
         std::chrono::duration<double, std::micro>(
-            ended - started)
-            .count());
+            ended - started).count());
   }
 
   std::sort(latency_us.begin(), latency_us.end());
@@ -83,8 +72,13 @@ int main() {
   std::cout
       << "tracks,iterations,p50_us,p95_us,p99_us\n";
 
+  // Day 9 target-count points.
+  run_case(1, 700);
+  run_case(3, 600);
   run_case(5, 500);
   run_case(10, 300);
+
+  // Day 5 scaling points retained for the wider failure/performance envelope.
   run_case(25, 200);
   run_case(50, 100);
   run_case(100, 30);
