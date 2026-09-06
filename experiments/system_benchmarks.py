@@ -59,7 +59,7 @@ def parse_key_values(text: str) -> dict[str, float]:
     return {
         key: float(value)
         for key, value in re.findall(
-            r"(\w+)=([0-9.]+)",
+            r"(\w+)=([-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?)",
             text,
         )
     }
