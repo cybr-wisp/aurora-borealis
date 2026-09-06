@@ -154,7 +154,18 @@ def build_observations(truth, configs, seed=SEED):
     return by_time, radars
 
 
-def run_filter(filter_cls, truth, configs, q=3.0, adaptive=False, seed=SEED):
+def run_filter(
+    filter_cls,
+    truth,
+    configs,
+    q=3.0,
+    adaptive=False,
+    seed=SEED,
+    nis_trigger=7.815,
+    q_scale_max=5.0,
+    q_scale_alpha=0.35,
+    q_scale_decay=0.20,
+):
     observations, _ = build_observations(truth, configs, seed=seed)
     first_t = min(observations)
     o0, c0 = observations[first_t][0]
@@ -162,31 +173,60 @@ def run_filter(filter_cls, truth, configs, q=3.0, adaptive=False, seed=SEED):
     p0 = np.diag([400, 400, 400, 2500, 2500, 2500]).astype(float)
     filt = filter_cls(x0, p0, q)
     sq_pos, raw_sq, nees_vals, nis_vals = [], [], [], []
-    maneuver_active = False
-    hold = 0
     history: list[float] = []
+    q_scale = 1.0
     per_step_rmse: list[float] = []
+
+    # 3-DOF measurement innovation: expected NIS is approximately 3.
+    # Rather than jumping between 1x and 10x process noise, adapt Q
+    # continuously to the magnitude of recent innovation inconsistency.
+    nis_expected = 3.0
 
     previous_t = first_t
     for state in truth:
         t = state.timestamp_sec
         if t < first_t or t not in observations:
             continue
+
         if t > first_t:
-            filt.predict(t - previous_t, 10.0 if maneuver_active else 1.0)
+            filt.predict(t - previous_t, q_scale)
+
         previous_t = t
+
         for obs, cfg in observations[t]:
-            z = np.array([obs.range_m, obs.azimuth_rad, obs.elevation_rad])
-            nis = filt.update(z, obs_cov(cfg), np.asarray(cfg.position_enu_m))
+            z = np.array(
+                [obs.range_m, obs.azimuth_rad, obs.elevation_rad]
+            )
+
+            nis = filt.update(
+                z,
+                obs_cov(cfg),
+                np.asarray(cfg.position_enu_m),
+            )
+
             nis_vals.append(nis)
             history.append(nis)
             history = history[-5:]
-            if adaptive and len(history) == 5 and np.mean(history) > 7.815:
-                maneuver_active, hold = True, 12
-        if maneuver_active:
-            hold -= 1
-            if hold <= 0:
-                maneuver_active = False
+
+            if adaptive and len(history) == 5:
+                mean_nis = float(np.mean(history))
+
+                if mean_nis > nis_trigger:
+                    desired_scale = float(
+                        np.clip(
+                            mean_nis / nis_expected,
+                            1.0,
+                            q_scale_max,
+                        )
+                    )
+
+                    q_scale = (
+                        (1.0 - q_scale_alpha) * q_scale
+                        + q_scale_alpha * desired_scale
+                    )
+                else:
+                    # Smoothly return toward the nominal process model.
+                    q_scale += q_scale_decay * (1.0 - q_scale)
         truth_x = state.vector()
         e = truth_x - filt.x
         if t >= 5.0:

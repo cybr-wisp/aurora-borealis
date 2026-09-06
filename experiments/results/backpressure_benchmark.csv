@@ -1,0 +1,2 @@
+produced,processed,producer_queue_full,consumer_shed_oldest,queue_high_water,elapsed_sec,p50_age_us,p95_age_us,p99_age_us
+50000.0,264.0,19024.0,30712.0,4095.0,0.053,24717.148,48324.769,50525.391

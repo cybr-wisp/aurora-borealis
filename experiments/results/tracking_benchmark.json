@@ -25,7 +25,7 @@
     ],
     "dt_sec": 0.1,
     "python": "3.13.5",
-    "elapsed_sec": 12.746,
+    "elapsed_sec": 5.993,
     "nees_95_bounds_6d": [
       1.237344245791203,
       14.44937533544792
@@ -85,15 +85,15 @@
       "nis_mean": 3.15646566494614
     },
     "adaptive_q": {
-      "rmse_m": 3.206583682046183,
+      "rmse_m": 3.3460809435643886,
       "raw_rmse_m": 16.39440820675786,
-      "rmse_improvement_pct": 80.440991577089,
-      "nees_in_95_pct": 69.50998185117967,
-      "nees_mean": 8.491846472393688,
-      "nis_mean": 3.140634260974572
+      "rmse_improvement_pct": 79.59010839936805,
+      "nees_in_95_pct": 68.60254083484574,
+      "nees_mean": 9.228839853801123,
+      "nis_mean": 3.1555572601094557
     },
     "static_recovery_sec": 0.8,
-    "adaptive_recovery_sec": 0.1
+    "adaptive_recovery_sec": 0.8
   },
   "degraded_sensing_monte_carlo": {
     "condition": "3 radars, 70% detection probability (30% dropout), 10% packet loss per radar",
@@ -107,11 +107,11 @@
     },
     "abrupt_maneuver_adaptive_ekf": {
       "runs": 20,
-      "rmse_mean_m": 4.136841349864225,
-      "rmse_p95_m": 4.435116056135059,
-      "rmse_max_m": 4.710186026294343,
+      "rmse_mean_m": 4.50040062541868,
+      "rmse_p95_m": 4.748195383898344,
+      "rmse_max_m": 4.926592045231712,
       "runs_below_5m_pct": 100.0,
-      "mean_nees_in_95_pct": 77.8356780849757
+      "mean_nees_in_95_pct": 75.82783191418773
     }
   }
 }
