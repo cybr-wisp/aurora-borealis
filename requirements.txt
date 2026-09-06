@@ -2,3 +2,5 @@ numpy>=1.26
 PyYAML>=6.0
 protobuf>=5.27
 pytest>=8.0
+matplotlib>=3.9
+websockets>=14.0

@@ -10,3 +10,10 @@ simulation/sim/network/observation_pb2.py
 
 vcpkg_installed/
 engine/vcpkg_installed/
+
+# Next.js dashboard
+dashboard/node_modules/
+dashboard/.next/
+dashboard/out/
+dashboard/*.tsbuildinfo
+dashboard/next-env.d.ts
