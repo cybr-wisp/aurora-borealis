@@ -1,0 +1,81 @@
+{
+  "protocol": {
+    "model": "two-mode interacting multiple-model CA EKF",
+    "development_seeds": [
+      20263000,
+      20263001,
+      20263002,
+      20263003,
+      20263004,
+      20263005,
+      20263006,
+      20263007,
+      20263008,
+      20263009,
+      20263010,
+      20263011,
+      20263012,
+      20263013,
+      20263014,
+      20263015,
+      20263016,
+      20263017,
+      20263018,
+      20263019
+    ],
+    "future_validation_seeds": "20264000-20264049 \u2014 NOT USED",
+    "smooth_jerk_q": 0.1,
+    "maneuver_jerk_q": 10.0,
+    "transition_matrix": [
+      [
+        0.995,
+        0.005
+      ],
+      [
+        0.05,
+        0.95
+      ]
+    ],
+    "initial_mode_probs": [
+      0.98,
+      0.02
+    ],
+    "p_acc": 100.0,
+    "detection_probability": 0.7,
+    "packet_loss_probability": 0.1,
+    "radars": 3,
+    "nees_bounds": [
+      1.237344245791203,
+      14.44937533544792
+    ]
+  },
+  "coordinated_turn": {
+    "runs": 20,
+    "rmse_mean_m": 3.579748988078979,
+    "rmse_p95_m": 4.109306950154454,
+    "rmse_max_m": 4.178002321654414,
+    "runs_below_5m_pct": 100.0,
+    "nees_coverage_pct": 90.63925140385128,
+    "nees_below_pct": 8.912637865836759,
+    "nees_above_pct": 0.44811073031195237,
+    "nees_mean": 3.8323362246017796,
+    "nis_mean": 2.9919319891834566,
+    "maneuver_mode_prob_mean": 0.060956118346787914,
+    "maneuver_mode_prob_max": 0.16365378439502226
+  },
+  "abrupt_maneuver": {
+    "runs": 20,
+    "rmse_mean_m": 3.8445318482205564,
+    "rmse_p95_m": 4.252217687098721,
+    "rmse_max_m": 4.476438202742523,
+    "runs_below_5m_pct": 100.0,
+    "nees_coverage_pct": 85.72730541140332,
+    "nees_below_pct": 8.498356780040757,
+    "nees_above_pct": 5.774337808555912,
+    "nees_mean": 5.6555108001496475,
+    "nis_mean": 3.0161222355355397,
+    "maneuver_mode_prob_mean": 0.11187272552169625,
+    "maneuver_mode_prob_max": 0.820964866265425,
+    "maneuver_mode_prob_during_event": 0.3666642732609332
+  }
+}
