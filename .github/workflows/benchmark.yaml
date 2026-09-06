@@ -1,0 +1,46 @@
+name: evaluation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "engine/**"
+      - "simulation/**"
+      - "experiments/**"
+      - "requirements.txt"
+      - ".github/workflows/benchmark.yaml"
+
+jobs:
+  evaluation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: python -m pip install -r requirements.txt
+
+      - run: >
+          sudo apt-get update &&
+          sudo apt-get install -y
+          libeigen3-dev
+          libprotobuf-dev
+          protobuf-compiler
+          libgtest-dev
+          ninja-build
+
+      - run: cmake -S engine -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build
+      - run: ctest --test-dir build --output-on-failure
+
+      - run: python experiments/run_all.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aurora-evaluation
+          path: |
+            experiments/results/
+            docs/figures/
