@@ -1,0 +1,42 @@
+﻿Aurora Borealis — Reproducibility Environment
+===============================================
+
+Final estimator commit:
+57dba08bc234507da7b465f533b00c1e77380ea5
+
+Final merge commit:
+c84dacf462cf91d55bb1ac2fed30947f77cb4049
+
+Environment snapshot generated:
+2026-09-06T01:19:45-04:00
+
+Python:
+Python 3.13.5
+
+Git:
+git version 2.52.0.windows.1
+
+Operating system:
+Microsoft Windows NT 10.0.26200.0
+
+Development seeds:
+20263000-20263019
+
+Final held-out seeds:
+20264000-20264049
+
+Final protocol:
+- 3 radars
+- 70% detection probability
+- 30% missed detections
+- 10% packet loss
+- two-mode IMM
+- 9-state constant-acceleration EKFs
+- smooth jerk Q = 0.1
+- maneuver jerk Q = 100.0
+- P(smooth -> maneuver) = 0.01
+- P(maneuver -> smooth) = 0.10
+- initial mode probabilities = [0.98, 0.02]
+- acceleration variance = 100
+- within-model covariance scale = 0.75
+- between-model covariance left unscaled
