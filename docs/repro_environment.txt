@@ -1,4 +1,4 @@
-﻿Aurora Borealis — Reproducibility Environment
+Aurora Borealis — Reproducibility Environment
 ===============================================
 
 Final estimator commit:

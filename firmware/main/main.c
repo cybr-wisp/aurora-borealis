@@ -1,4 +1,4 @@
-﻿#include "sdkconfig.h"
+#include "sdkconfig.h"
 #include "sensor_task.h"
 #include "telemetry_task.h"
 #include "time_sync.h"

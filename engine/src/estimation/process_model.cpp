@@ -1,4 +1,4 @@
-﻿#include "estimation/process_model.h"
+#include "estimation/process_model.h"
 #include <stdexcept>
 
 namespace aurora::estimation {

@@ -1,4 +1,4 @@
-﻿#include "sdkconfig.h"
+#include "sdkconfig.h"
 #include "wifi.h"
 
 #include "esp_check.h"

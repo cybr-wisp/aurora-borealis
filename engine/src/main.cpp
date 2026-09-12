@@ -1,4 +1,4 @@
-﻿#include "ingestion/observation_queue.h"
+#include "ingestion/observation_queue.h"
 #include "ingestion/sensor_liveness.h"
 #include "ingestion/udp_receiver.h"
 #include "ingestion/validator.h"
