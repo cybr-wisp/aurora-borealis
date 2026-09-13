@@ -4,23 +4,12 @@
 
 [![Tests](https://github.com/cybr-wisp/aurora-borealis/actions/workflows/test.yaml/badge.svg)](https://github.com/cybr-wisp/aurora-borealis/actions/workflows/test.yaml)
 [![Evaluation](https://github.com/cybr-wisp/aurora-borealis/actions/workflows/benchmark.yaml/badge.svg)](https://github.com/cybr-wisp/aurora-borealis/actions/workflows/benchmark.yaml)
-
-<p align="left">
-  <img src="https://img.shields.io/badge/C++-20-00599C?logo=cplusplus&logoColor=white" alt="C++20" />
-  <img src="https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white" alt="Python 3.13" />
-  <img src="https://img.shields.io/badge/TypeScript-Next.js%20%2B%20D3-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/ESP--IDF-ESP32--S3-E7352C?logo=espressif&logoColor=white" alt="ESP-IDF" />
-  <img src="https://img.shields.io/badge/Protobuf-Sensor%20Telemetry-4285F4?logo=google&logoColor=white" alt="Protocol Buffers" />
-  <img src="https://img.shields.io/badge/CMake-Ninja-064F8C?logo=cmake&logoColor=white" alt="CMake" />
-  <img src="https://img.shields.io/badge/Eigen-Linear%20Algebra-8A2BE2" alt="Eigen" />
-  <img src="https://img.shields.io/badge/GitHub%20Actions-Linux%20Release-2088FF?logo=githubactions&logoColor=white" alt="GitHub Actions" />
-</p>
-
-<p align="left">
-  <img src="https://img.shields.io/badge/Sensor%20Fusion-Multi--Radar-2F4F4F" alt="Sensor Fusion" />
-  <img src="https://img.shields.io/badge/State%20Estimation-EKF%20%7C%20UKF%20%7C%20IMM-6A5ACD" alt="State Estimation" />
-  <img src="https://img.shields.io/badge/Validation-RMSE%20%7C%20NEES%20%7C%20NIS-B22222" alt="Validation" />
-</p>
+![C++20](https://img.shields.io/badge/C++-20-EC4899?logo=cplusplus&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.13-EC4899?logo=python&logoColor=white)
+![Next.js + D3](https://img.shields.io/badge/Next.js%20%2B%20D3-EC4899?logo=typescript&logoColor=white)
+![ESP-IDF](https://img.shields.io/badge/ESP32-ESP--IDF-EC4899?logo=espressif&logoColor=white)
+![Protobuf](https://img.shields.io/badge/Protobuf-EC4899?logo=google&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-EC4899)
 
 Aurora Borealis is a research-oriented tracking system for studying how
 multi-radar estimators behave under missed detections, packet loss, sensor
@@ -75,8 +64,6 @@ seeds.
 Aurora has three connected paths: research estimation, native ingestion, and
 live operator visualization, with an embedded sensor node feeding the same
 pipeline as the software simulator.
-
-![Architecture diagram](docs/architecture-diagram.png)
 
 ```mermaid
 flowchart LR
