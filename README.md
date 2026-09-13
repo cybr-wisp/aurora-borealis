@@ -1,4 +1,4 @@
-<div align="center">
+﻿<div align="center">
 
 # Aurora Borealis
 
@@ -129,8 +129,7 @@ proven before physical hardware arrives. `CONFIG_AURORA_FAKE_SENSORS=y`
 (current default) exercises the real FreeRTOS/buffering/Protobuf/UDP path
 with deterministic fake IMU/ToF values; the real MPU6050 driver is
 implemented and untested on hardware, and the real VL53L1X path is not
-yet implemented. See [`docs/embedded_day6.md`](docs/embedded_day6.md) for
-the full real-vs-fake breakdown.
+yet implemented. 
 
 ---
 
