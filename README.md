@@ -1,26 +1,16 @@
+<div align="center">
+
 # Aurora Borealis
 
 **Multi-sensor tracking and state-estimation under unreliable sensing.**
 
 [![Tests](https://github.com/cybr-wisp/aurora-borealis/actions/workflows/test.yaml/badge.svg)](https://github.com/cybr-wisp/aurora-borealis/actions/workflows/test.yaml)
-[![Evaluation](https://github.com/cybr-wisp/aurora-borealis/actions/workflows/benchmark.yaml/badge.svg)](https://github.com/cybr-wisp/aurora-borealis/actions/workflows/benchmark.yaml)
+![C++20](https://img.shields.io/badge/C++-20-EC4899?logo=cplusplus&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.13-EC4899?logo=python&logoColor=white)
+![ESP-IDF](https://img.shields.io/badge/ESP32-ESP--IDF-EC4899?logo=espressif&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-EC4899)
 
-<p align="left">
-  <img src="https://img.shields.io/badge/C++-20-00599C?logo=cplusplus&logoColor=white" alt="C++20" />
-  <img src="https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white" alt="Python 3.13" />
-  <img src="https://img.shields.io/badge/TypeScript-Next.js%20%2B%20D3-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/ESP--IDF-ESP32--S3-E7352C?logo=espressif&logoColor=white" alt="ESP-IDF" />
-  <img src="https://img.shields.io/badge/Protobuf-Sensor%20Telemetry-4285F4?logo=google&logoColor=white" alt="Protocol Buffers" />
-  <img src="https://img.shields.io/badge/CMake-Ninja-064F8C?logo=cmake&logoColor=white" alt="CMake" />
-  <img src="https://img.shields.io/badge/Eigen-Linear%20Algebra-8A2BE2" alt="Eigen" />
-  <img src="https://img.shields.io/badge/GitHub%20Actions-Linux%20Release-2088FF?logo=githubactions&logoColor=white" alt="GitHub Actions" />
-</p>
-
-<p align="left">
-  <img src="https://img.shields.io/badge/Sensor%20Fusion-Multi--Radar-2F4F4F" alt="Sensor Fusion" />
-  <img src="https://img.shields.io/badge/State%20Estimation-EKF%20%7C%20UKF%20%7C%20IMM-6A5ACD" alt="State Estimation" />
-  <img src="https://img.shields.io/badge/Validation-RMSE%20%7C%20NEES%20%7C%20NIS-B22222" alt="Validation" />
-</p>
+</div>
 
 Aurora Borealis is a research-oriented tracking system for studying how
 multi-radar estimators behave under missed detections, packet loss, sensor
@@ -31,6 +21,20 @@ filtering, interacting multiple-model estimation, statistical consistency
 testing, a native C++ ingestion / association pipeline, a live operator
 console, and an ESP32 sensor-node firmware path toward physical
 hardware-in-the-loop testing.
+
+## Table of contents
+
+- [1.0 Results](#results)
+- [2.0 System](#system)
+- [3.0 Why this is non-trivial](#why-this-is-non-trivial)
+- [4.0 Baselines](#baselines)
+- [5.0 Native performance](#native-performance)
+- [6.0 Robustness experiments](#robustness-experiments)
+- [7.0 Engineering decisions](#engineering-decisions)
+- [8.0 Reproduce it](#reproduce-it)
+- [9.0 Repository layout](#repository-layout)
+- [10.0 Scope and limitations](#scope-and-limitations)
+- [11.0 Evidence](#evidence)
 
 ---
 
@@ -78,135 +82,42 @@ pipeline as the software simulator.
 
 ![Architecture diagram](docs/architecture-diagram.png)
 
-```mermaid
-flowchart LR
-    T[Target trajectory]
-
-    T --> R1[Radar 1]
-    T --> R2[Radar 2]
-    T --> R3[Radar 3]
-    FW[ESP32 sensor node]
-
-    R1 --> O[Range / azimuth / elevation]
-    R2 --> O
-    R3 --> O
-    FW --> P
-
-    O --> S[Missed detections + packet loss + noise]
-
-    S --> E[Research estimator]
-    E --> IMM[Two-mode IMM]
-    IMM --> CA1[9-state CA EKF<br/>smooth model]
-    IMM --> CA2[9-state CA EKF<br/>maneuver model]
-    CA1 --> F[Fused state + covariance]
-    CA2 --> F
-
-    F --> M[RMSE / NEES / NIS]
-    F --> WS[WebSocket state stream]
-    WS --> D[Next.js + D3 operator console]
-
-    S --> P[Protobuf / UDP]
-    P --> Q[Bounded C++ SPSC queue]
-    Q --> A[Gating + association]
-    A --> B[Native benchmarks]
-```
-
 ### Research estimation path
 
-The final estimator uses two constant-acceleration EKFs with state
-
-```text
-[x, y, z, vx, vy, vz, ax, ay, az]
-```
-
-inside an interacting multiple-model estimator.
-
-Frozen final configuration:
-
-```text
-smooth-model jerk Q       = 0.1
-maneuver-model jerk Q     = 100.0
-
-P(smooth -> maneuver)     = 0.01
-P(maneuver -> smooth)     = 0.10
-
-initial mode probability  = [0.98, 0.02]
-initial acceleration var  = 100
-
-within-model covariance scale = 0.75
-between-model uncertainty     = preserved
-```
-
-Mode probabilities are updated from radar measurement likelihoods, while
-IMM mixing carries both within-model covariance and disagreement between
-models into the fused posterior.
+Two constant-acceleration EKFs, state `[x, y, z, vx, vy, vz, ax, ay, az]`,
+combined in an interacting multiple-model (IMM) estimator: smooth-model
+jerk Q = 0.1, maneuver-model jerk Q = 100.0, transition probabilities
+0.01 / 0.10. Mode probabilities update from radar measurement
+likelihoods; IMM mixing carries both within-model covariance and
+between-model disagreement into the fused posterior.
 
 ### Native systems path
 
-The C++ side implements the performance-sensitive sensor path:
-
-```text
-UDP
- ↓
-Protobuf decode
- ↓
-validation
- ↓
-bounded SPSC ingestion queue
- ↓
-gating / data association
- ↓
-tracking
-```
-
-UDP is intentional: sensor telemetry is freshness-sensitive, so occasional
-loss is preferable to transport-level head-of-line blocking.
+`UDP → Protobuf decode → validation → bounded SPSC queue → gating /
+association → tracking`. UDP is intentional: sensor telemetry is
+freshness-sensitive, so occasional loss is preferable to transport-level
+head-of-line blocking.
 
 ### Live operator console
 
-`dashboard/` is a Next.js + D3 console connected to a live WebSocket state
-stream. The browser does not run any estimation logic — it only renders
-state and sends operator commands. It receives:
-
-- active tracks and lifecycle state
-- ENU position and velocity, with 2D covariance for uncertainty ellipses
-- NEES history
-- per-sensor configured and adaptive measurement-noise ratios
-- sensor health and packet-loss counters
-- observations/sec, active-track count, and p99 latency
-
-Before physical hardware-in-the-loop is available, `simulation/live_operator.py`
-drives the dashboard with real EKF/UKF updates from Aurora's existing
-estimator implementation and exposes deterministic failure controls (kill
-or restore a sensor, inject range bias or measurement noise, trigger a
-maneuver, add a target, toggle EKF/UKF, reset). This bridge sits behind the
-same WebSocket state contract the C++ engine or a hardware-backed feed will
-eventually publish to, so dashboard components don't need to change when
-the backend does.
+`dashboard/` is a Next.js + D3 console driven by a live WebSocket state
+stream (tracks, covariance ellipses, NEES history, sensor health,
+throughput). The browser only renders state and sends operator commands —
+no estimation logic runs client-side. `simulation/live_operator.py`
+currently drives it with real EKF/UKF updates and deterministic failure
+controls (kill/restore a sensor, inject noise or bias, trigger a maneuver,
+toggle EKF/UKF), sitting behind the same state contract a hardware-backed
+feed will later use.
 
 ### Embedded sensor node
 
-`firmware/` targets an ESP32-S3 and is built so the networking and
-real-time pipeline can be developed before physical IMU/ToF hardware
-arrives:
-
-- `SensorTask` samples at 100 Hz into a bounded, drop-oldest ring buffer
-  and tracks real sample interval and scheduling jitter
-- `TelemetryTask` waits for Wi-Fi, drains the buffer, encodes the same
-  `Observation` Protobuf schema the C++ engine consumes, and sends UDP
-  after SNTP time sync
-- `CONFIG_AURORA_FAKE_SENSORS=y` (the current default) produces
-  deterministic IMU/ToF values while exercising the real FreeRTOS,
-  buffering, Protobuf, and UDP code paths
-- the real MPU6050 path is implemented directly against the ESP-IDF I2C
-  driver (400 kHz, WHO_AM_I check, wake-from-sleep, DLPF, retry/backoff,
-  stationary bias calibration)
-- the real VL53L1X ToF path is intentionally **not implemented** yet — the
-  adapter returns `ESP_ERR_NOT_SUPPORTED` until it can be tested against
-  actual hardware rather than guessed at
-
-See [`docs/embedded_day6.md`](docs/embedded_day6.md) for the full breakdown
-of what's real versus fake-mode today.
+`firmware/` targets an ESP32-S3, built so the real-time pipeline is
+proven before physical hardware arrives. `CONFIG_AURORA_FAKE_SENSORS=y`
+(current default) exercises the real FreeRTOS/buffering/Protobuf/UDP path
+with deterministic fake IMU/ToF values; the real MPU6050 driver is
+implemented and untested on hardware, and the real VL53L1X path is not
+yet implemented. See [`docs/embedded_day6.md`](docs/embedded_day6.md) for
+the full real-vs-fake breakdown.
 
 ---
 
