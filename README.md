@@ -10,8 +10,6 @@
 ![ESP-IDF](https://img.shields.io/badge/ESP32-ESP--IDF-E7352C?logo=espressif&logoColor=white)
 ![License](https://img.shields.io/badge/License-Apache%202.0-28A745)
 
-<br><br>
-
 <img src="docs/walkthrough-header-gif.gif" width="100%" alt="Aurora Borealis live operator walkthrough" />
 
 </div>
