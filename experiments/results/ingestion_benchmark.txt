@@ -1,4 +1,4 @@
-﻿=== In-process Protobuf + SPSC microbenchmark ===
+=== In-process Protobuf + SPSC microbenchmark ===
 payload_bytes=69 messages=300000 throughput_msg_s=9.87677e+06 p50_us=0.1 p95_us=0.1 p99_us=0.1
 
 === End-to-end UDP loopback benchmark ===

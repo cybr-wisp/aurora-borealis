@@ -1,4 +1,4 @@
-﻿#include "estimation/adaptive_noise.h"
+#include "estimation/adaptive_noise.h"
 
 #include <gtest/gtest.h>
 

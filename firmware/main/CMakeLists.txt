@@ -1,4 +1,4 @@
-﻿idf_component_register(
+idf_component_register(
     SRCS
         "main.c"
         "ring_buffer.c"

@@ -1,4 +1,4 @@
-﻿#include "ingestion/observation_queue.h"
+#include "ingestion/observation_queue.h"
 
 #include <algorithm>
 #include <atomic>
