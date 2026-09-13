@@ -14,8 +14,12 @@ Eigen::Vector3d cartesian_to_spherical(const Eigen::Vector3d& p) {
   return {r, std::atan2(p.y(), p.x()), std::atan2(p.z(), std::hypot(p.x(), p.y()))};
 }
 double wrap_angle(double a) {
-  while (a > std::numbers::pi) a -= 2.0 * std::numbers::pi;
-  while (a < -std::numbers::pi) a += 2.0 * std::numbers::pi;
-  return a;
+  if (!std::isfinite(a)) {
+    throw std::invalid_argument("angle must be finite");
+  }
+
+  return std::remainder(
+      a,
+      2.0 * std::numbers::pi);
 }
 }
