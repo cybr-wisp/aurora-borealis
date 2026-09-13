@@ -5,10 +5,10 @@
 **Multi-sensor tracking and state-estimation under unreliable sensing.**
 
 [![Tests](https://github.com/cybr-wisp/aurora-borealis/actions/workflows/test.yaml/badge.svg)](https://github.com/cybr-wisp/aurora-borealis/actions/workflows/test.yaml)
-![C++20](https://img.shields.io/badge/C++-20-EC4899?logo=cplusplus&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3.13-EC4899?logo=python&logoColor=white)
-![ESP-IDF](https://img.shields.io/badge/ESP32-ESP--IDF-EC4899?logo=espressif&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-EC4899)
+![C++20](https://img.shields.io/badge/C++-20-00599C?logo=cplusplus&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)
+![ESP-IDF](https://img.shields.io/badge/ESP32-ESP--IDF-E7352C?logo=espressif&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-28A745)
 
 </div>
 
@@ -24,21 +24,21 @@ hardware-in-the-loop testing.
 
 ## Table of contents
 
-- [1.0 Results](#results)
-- [2.0 System](#system)
-- [3.0 Why this is non-trivial](#why-this-is-non-trivial)
-- [4.0 Baselines](#baselines)
-- [5.0 Native performance](#native-performance)
-- [6.0 Robustness experiments](#robustness-experiments)
-- [7.0 Engineering decisions](#engineering-decisions)
-- [8.0 Reproduce it](#reproduce-it)
-- [9.0 Repository layout](#repository-layout)
-- [10.0 Scope and limitations](#scope-and-limitations)
-- [11.0 Evidence](#evidence)
+- [1.0 Results](#10-results)
+- [2.0 System](#20-system)
+- [3.0 Why this is non-trivial](#30-why-this-is-non-trivial)
+- [4.0 Baselines](#40-baselines)
+- [5.0 Native performance](#50-native-performance)
+- [6.0 Robustness experiments](#60-robustness-experiments)
+- [7.0 Engineering decisions](#70-engineering-decisions)
+- [8.0 Reproduce it](#80-reproduce-it)
+- [9.0 Repository layout](#90-repository-layout)
+- [10.0 Scope and limitations](#100-scope-and-limitations)
+- [11.0 Evidence](#110-evidence)
 
 ---
 
-## Results
+## 1.0 Results
 
 The final estimator was frozen before evaluation on **50 previously unseen
 Monte Carlo seeds per trajectory regime**.
@@ -74,7 +74,7 @@ seeds.
 
 ---
 
-## System
+## 2.0 System
 
 Aurora has three connected paths: research estimation, native ingestion, and
 live operator visualization, with an embedded sensor node feeding the same
@@ -121,7 +121,7 @@ the full real-vs-fake breakdown.
 
 ---
 
-## Why this is non-trivial
+## 3.0 Why this is non-trivial
 
 ### Deterministic stochastic simulation
 
@@ -198,7 +198,7 @@ published result, but they are not used for further model selection.
 
 ---
 
-## Baselines
+## 4.0 Baselines
 
 The simpler constant-velocity estimator establishes the value of
 multi-sensor fusion before maneuver modeling is introduced.
@@ -224,7 +224,7 @@ because the measurement model is nonlinear.
 
 ---
 
-## Native performance
+## 5.0 Native performance
 
 Benchmarks below come from a **Linux Release build in GitHub Actions**.
 
@@ -264,7 +264,7 @@ Headline:
 
 ---
 
-## Robustness experiments
+## 6.0 Robustness experiments
 
 Aurora also evaluates estimator behavior as sensing quality changes.
 
@@ -301,7 +301,7 @@ rather than being manually copied into documentation.
 
 ---
 
-## Engineering decisions
+## 7.0 Engineering decisions
 
 | Decision | Reason |
 |---|---|
@@ -320,7 +320,7 @@ Detailed design discussion is in
 
 ---
 
-## Reproduce it
+## 8.0 Reproduce it
 
 ### Python evaluation
 
@@ -436,7 +436,7 @@ node's engine IPv4 at the host machine's LAN address.
 
 ---
 
-## Repository layout
+## 9.0 Repository layout
 
 ```text
 aurora-borealis/
@@ -458,7 +458,7 @@ aurora-borealis/
 
 ---
 
-## Scope and limitations
+## 10.0 Scope and limitations
 
 Aurora's strongest claims are based on simulation and Linux CI benchmarks.
 
@@ -492,7 +492,7 @@ is not claimed until a hardware experiment is completed and recorded.
 
 ---
 
-## Evidence
+## 11.0 Evidence
 
 Key machine-readable artifacts:
 
