@@ -10,6 +10,10 @@
 ![ESP-IDF](https://img.shields.io/badge/ESP32-ESP--IDF-E7352C?logo=espressif&logoColor=white)
 ![License](https://img.shields.io/badge/License-Apache%202.0-28A745)
 
+<br><br>
+
+<img src="docs/walkthrough-header-gif.gif" width="100%" alt="Aurora Borealis live operator walkthrough" />
+
 </div>
 
 Aurora Borealis is a research-oriented tracking system for studying how
@@ -108,6 +112,17 @@ currently drives it with real EKF/UKF updates and deterministic failure
 controls (kill/restore a sensor, inject noise or bias, trigger a maneuver,
 toggle EKF/UKF), sitting behind the same state contract a hardware-backed
 feed will later use.
+
+<table>
+  <tr>
+    <td width="50%">
+      <img src="docs/operator-console-1.png" width="100%" alt="Aurora Borealis operator console tracking view" />
+    </td>
+    <td width="50%">
+      <img src="docs/operator-console-2.png" width="100%" alt="Aurora Borealis operator console telemetry view" />
+    </td>
+  </tr>
+</table>
 
 ### Embedded sensor node
 
