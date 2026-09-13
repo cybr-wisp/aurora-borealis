@@ -8,6 +8,8 @@
 <p align="left">
   <img src="https://img.shields.io/badge/C++-20-00599C?logo=cplusplus&logoColor=white" alt="C++20" />
   <img src="https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white" alt="Python 3.13" />
+  <img src="https://img.shields.io/badge/TypeScript-Next.js%20%2B%20D3-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/ESP--IDF-ESP32--S3-E7352C?logo=espressif&logoColor=white" alt="ESP-IDF" />
   <img src="https://img.shields.io/badge/Protobuf-Sensor%20Telemetry-4285F4?logo=google&logoColor=white" alt="Protocol Buffers" />
   <img src="https://img.shields.io/badge/CMake-Ninja-064F8C?logo=cmake&logoColor=white" alt="CMake" />
   <img src="https://img.shields.io/badge/Eigen-Linear%20Algebra-8A2BE2" alt="Eigen" />
@@ -20,15 +22,15 @@
   <img src="https://img.shields.io/badge/Validation-RMSE%20%7C%20NEES%20%7C%20NIS-B22222" alt="Validation" />
 </p>
 
-**Multi-sensor tracking and state-estimation under unreliable sensing.**
-
 Aurora Borealis is a research-oriented tracking system for studying how
 multi-radar estimators behave under missed detections, packet loss, sensor
 noise, and target maneuvers.
 
-The project combines deterministic radar simulation, nonlinear Bayesian
+The project spans deterministic radar simulation, nonlinear Bayesian
 filtering, interacting multiple-model estimation, statistical consistency
-testing, and a native C++ ingestion / association pipeline.
+testing, a native C++ ingestion / association pipeline, a live operator
+console, and an ESP32 sensor-node firmware path toward physical
+hardware-in-the-loop testing.
 
 ---
 
@@ -70,7 +72,11 @@ seeds.
 
 ## System
 
-Aurora has two complementary evaluation paths.
+Aurora has three connected paths: research estimation, native ingestion, and
+live operator visualization, with an embedded sensor node feeding the same
+pipeline as the software simulator.
+
+![Architecture diagram](docs/architecture-diagram.png)
 
 ```mermaid
 flowchart LR
@@ -79,10 +85,12 @@ flowchart LR
     T --> R1[Radar 1]
     T --> R2[Radar 2]
     T --> R3[Radar 3]
+    FW[ESP32 sensor node]
 
     R1 --> O[Range / azimuth / elevation]
     R2 --> O
     R3 --> O
+    FW --> P
 
     O --> S[Missed detections + packet loss + noise]
 
@@ -94,6 +102,8 @@ flowchart LR
     CA2 --> F
 
     F --> M[RMSE / NEES / NIS]
+    F --> WS[WebSocket state stream]
+    WS --> D[Next.js + D3 operator console]
 
     S --> P[Protobuf / UDP]
     P --> Q[Bounded C++ SPSC queue]
@@ -151,6 +161,52 @@ tracking
 
 UDP is intentional: sensor telemetry is freshness-sensitive, so occasional
 loss is preferable to transport-level head-of-line blocking.
+
+### Live operator console
+
+`dashboard/` is a Next.js + D3 console connected to a live WebSocket state
+stream. The browser does not run any estimation logic — it only renders
+state and sends operator commands. It receives:
+
+- active tracks and lifecycle state
+- ENU position and velocity, with 2D covariance for uncertainty ellipses
+- NEES history
+- per-sensor configured and adaptive measurement-noise ratios
+- sensor health and packet-loss counters
+- observations/sec, active-track count, and p99 latency
+
+Before physical hardware-in-the-loop is available, `simulation/live_operator.py`
+drives the dashboard with real EKF/UKF updates from Aurora's existing
+estimator implementation and exposes deterministic failure controls (kill
+or restore a sensor, inject range bias or measurement noise, trigger a
+maneuver, add a target, toggle EKF/UKF, reset). This bridge sits behind the
+same WebSocket state contract the C++ engine or a hardware-backed feed will
+eventually publish to, so dashboard components don't need to change when
+the backend does.
+
+### Embedded sensor node
+
+`firmware/` targets an ESP32-S3 and is built so the networking and
+real-time pipeline can be developed before physical IMU/ToF hardware
+arrives:
+
+- `SensorTask` samples at 100 Hz into a bounded, drop-oldest ring buffer
+  and tracks real sample interval and scheduling jitter
+- `TelemetryTask` waits for Wi-Fi, drains the buffer, encodes the same
+  `Observation` Protobuf schema the C++ engine consumes, and sends UDP
+  after SNTP time sync
+- `CONFIG_AURORA_FAKE_SENSORS=y` (the current default) produces
+  deterministic IMU/ToF values while exercising the real FreeRTOS,
+  buffering, Protobuf, and UDP code paths
+- the real MPU6050 path is implemented directly against the ESP-IDF I2C
+  driver (400 kHz, WHO_AM_I check, wake-from-sleep, DLPF, retry/backoff,
+  stationary bias calibration)
+- the real VL53L1X ToF path is intentionally **not implemented** yet — the
+  adapter returns `ESP_ERR_NOT_SUPPORTED` until it can be tested against
+  actual hardware rather than guessed at
+
+See [`docs/embedded_day6.md`](docs/embedded_day6.md) for the full breakdown
+of what's real versus fake-mode today.
 
 ---
 
@@ -301,21 +357,28 @@ Headline:
 
 Aurora also evaluates estimator behavior as sensing quality changes.
 
-### Packet loss
-
-![Packet-loss sweep](docs/figures/packet_loss.png)
-
-### Sensor count
-
-![Sensor-count sweep](docs/figures/sensor_count.png)
-
-### Sensor outage
-
-![Sensor-outage experiment](docs/figures/sensor_outage.png)
-
-### Measurement noise
-
-![Noise sweep](docs/figures/noise_sweep.png)
+<table>
+  <tr>
+    <td width="50%">
+      <img src="docs/figures/packet_loss.png" width="100%" alt="Packet-loss sweep" />
+      <p align="center"><sub><b>Packet loss</b></sub></p>
+    </td>
+    <td width="50%">
+      <img src="docs/figures/sensor_count.png" width="100%" alt="Sensor-count sweep" />
+      <p align="center"><sub><b>Sensor count</b></sub></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="docs/figures/sensor_outage.png" width="100%" alt="Sensor-outage experiment" />
+      <p align="center"><sub><b>Sensor outage</b></sub></p>
+    </td>
+    <td width="50%">
+      <img src="docs/figures/noise_sweep.png" width="100%" alt="Noise sweep" />
+      <p align="center"><sub><b>Measurement noise</b></sub></p>
+    </td>
+  </tr>
+</table>
 
 The raw generated results live under:
 
@@ -338,6 +401,8 @@ rather than being manually copied into documentation.
 | Bounded SPSC queue | No per-message allocation in the one-producer / one-consumer ingestion path |
 | IMM over one globally inflated Q | Allows smooth and maneuver hypotheses to coexist |
 | Held-out seeds | Separates parameter selection from final evaluation |
+| WebSocket state contract for the dashboard | Lets the live feed backend change (software → hardware) without touching frontend components |
+| Fake-mode-first firmware | Real-time pipeline, buffering, and wire format proven before physical sensors arrive |
 
 Detailed design discussion is in
 [`docs/tracking_design.md`](docs/tracking_design.md).
@@ -421,6 +486,43 @@ python experiments/system_benchmarks.py
 CI executes the same Release build and uploads generated results and figures
 as evaluation artifacts.
 
+### Live operator console
+
+Terminal 1:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+python simulation/live_operator.py
+```
+
+Terminal 2:
+
+```powershell
+cd dashboard
+npm install
+npm run typecheck
+npm run build
+npm run dev
+```
+
+Open `http://localhost:3000`.
+
+### Embedded firmware (fake-sensor mode)
+
+Requires ESP-IDF installed and targeting the ESP32-S3:
+
+```powershell
+cd firmware
+idf.py set-target esp32s3
+idf.py menuconfig
+idf.py build
+```
+
+Set Wi-Fi credentials, the Aurora engine's IPv4, UDP port, and sensor ID
+under the `Aurora Borealis sensor node` menu. For fake-mode network
+integration, run the desktop engine on UDP 46000 and point the ESP32
+node's engine IPv4 at the host machine's LAN address.
+
 ---
 
 ## Repository layout
@@ -428,14 +530,18 @@ as evaluation artifacts.
 ```text
 aurora-borealis/
 ├── engine/                 C++ ingestion, geometry, estimation, association
-├── simulation/             deterministic radar + trajectory simulation
+├── simulation/             deterministic radar + trajectory simulation, live operator bridge
+├── dashboard/              Next.js + D3 live operator console (WebSocket state stream)
+├── firmware/               ESP32-S3 sensor-node firmware (fake-mode default, real MPU6050 path)
 ├── experiments/            evaluation and benchmark drivers
 │   └── results/            committed machine-readable results
+├── configs/                engine / dashboard / experiment configuration (in progress)
 ├── docs/
 │   ├── figures/            generated evaluation figures
 │   ├── math_design.md
-│   └── tracking_design.md
-├── firmware/               embedded sensor-side work
+│   ├── tracking_design.md
+│   ├── observability_day8.md
+│   └── embedded_day6.md
 └── .github/workflows/      test + Linux evaluation CI
 ```
 
@@ -464,8 +570,14 @@ not 95%.
 The ~7.9M msg/s result is an in-process parsing / enqueue benchmark, not
 end-to-end network throughput.
 
-Physical hardware-in-the-loop validation is not claimed until a hardware
-experiment is completed and recorded.
+The dashboard and live operator console are validated against the software
+estimator only; no C++-engine-backed live feed exists yet.
+
+The firmware builds and runs its full real-time pipeline against
+deterministic fake sensor values (`CONFIG_AURORA_FAKE_SENSORS=y`), and the
+real IMU path is implemented but untested against physical hardware. The
+real ToF path is not implemented. Physical hardware-in-the-loop validation
+is not claimed until a hardware experiment is completed and recorded.
 
 ---
 
