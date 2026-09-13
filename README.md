@@ -6,9 +6,9 @@
 
 [![Tests](https://github.com/cybr-wisp/aurora-borealis/actions/workflows/test.yaml/badge.svg)](https://github.com/cybr-wisp/aurora-borealis/actions/workflows/test.yaml)
 ![C++20](https://img.shields.io/badge/C++-20-00599C?logo=cplusplus&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)
 ![ESP-IDF](https://img.shields.io/badge/ESP32-ESP--IDF-E7352C?logo=espressif&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-28A745)
+![License](https://img.shields.io/badge/License-Apache%202.0-28A745)
 
 </div>
 
@@ -446,7 +446,6 @@ aurora-borealis/
 ├── firmware/               ESP32-S3 sensor-node firmware (fake-mode default, real MPU6050 path)
 ├── experiments/            evaluation and benchmark drivers
 │   └── results/            committed machine-readable results
-├── configs/                engine / dashboard / experiment configuration (in progress)
 ├── docs/
 │   ├── figures/            generated evaluation figures
 │   ├── math_design.md

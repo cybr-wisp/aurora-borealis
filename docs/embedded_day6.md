@@ -1,4 +1,4 @@
-# Day 6 â€” Embedded firmware before hardware
+# Day 6 — Embedded firmware before hardware
 
 The firmware is structured so the networking and real-time pipeline can be
 built before the physical ESP32/IMU/ToF parts arrive.
